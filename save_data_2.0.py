@@ -4,13 +4,13 @@ import time
 
 # Configurações da porta serial
 serial_port = 'COM8'  # Defina a porta serial correta (exemplo para Linux)
-baud_rate = 250000
+baud_rate = 9600
 
 # Abre a porta serial
 ser = serial.Serial(serial_port, baud_rate)
 
 # Abre o arquivo CSV para escrita
-csv_file_path = 'dados_senoide_tensao.csv'
+csv_file_path = 'dados_senoide_100hz.csv'
 csv_file = open(csv_file_path, 'w', newline='')
 csv_writer = csv.writer(csv_file)
 csv_writer.writerow(['tempo', 'tensao'])

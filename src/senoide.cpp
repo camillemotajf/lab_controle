@@ -139,7 +139,7 @@ void calculateCurrentSpeed() {
 int t = 0;
 
 void setup() {
-  Serial.begin(250000); // Inicia a comunicação serial
+  Serial.begin(9600); // Inicia a comunicação serial
   pinMode(IN1, OUTPUT);
   pinMode(IN2, OUTPUT);
   pinMode(ENA, OUTPUT);
@@ -156,7 +156,7 @@ void loop() {
     
   unsigned long currentTime = micros();
   // float radianos = t * (PI / 180.0); // Converte graus para radianos
-  int valor = AMPLITUDE * sin(2*PI*FREQUENCIA * currentTime/1000000.0) + AMPLITUDE; // Calcula o valor da onda senoidal
+  int valor = AMPLITUDE * sin(2*PI*FREQUENCIA * micros()/1000000.0) + AMPLITUDE; // Calcula o valor da onda senoidal
   float elapsedTime = (currentTime)/ 1000000.0;
   analogWrite(ENA, valor);
   calculateCurrentSpeed();
