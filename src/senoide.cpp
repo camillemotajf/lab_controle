@@ -5,7 +5,7 @@
 #include <Encoder.h>
 
 #define AMPLITUDE 100
-#define FREQUENCIA 10 // Defina a frequência desejada aqui
+#define FREQUENCIA 100 // Defina a frequência desejada aqui
 // #include <typeinfo>
 
 // Definições de pinos para o motor e encoder
@@ -14,7 +14,6 @@ const int ENCB = 3;  // Pino B do encoder
 const int IN1 = 9;   // Pino IN1 da ponte H (controle de direção)
 const int IN2 = 8;   // Pino IN2 da ponte H (controle de direção)
 const int ENA = 5;  // Pino ENA da ponte H (controle de velocidade)
-const int PWM_VALUE = 100; // Valor arbitrário de PWM (0 a 255)
 
 // Constantes para configuração do encoder
 const float PPR = 200.0; // Pulsos por rotação do encoder
@@ -50,7 +49,7 @@ void calculateCurrentSpeed() {
 
    // Exibe a velocidade calculada no Serial Monitor
   //  Serial.print("Velocidade (RPM): ");
-//    Serial.print(speedRPM);
+    Serial.println(speedRPM);
 //    Serial.print(",");
 //    Serial.println(timeInSeconds);
 }
@@ -58,7 +57,7 @@ void calculateCurrentSpeed() {
 int t = 0;
 
 void setup() {
-  Serial.begin(9600); // Inicia a comunicação serial
+  Serial.begin(115200); // Inicia a comunicação serial
   pinMode(IN1, OUTPUT);
   pinMode(IN2, OUTPUT);
   pinMode(ENA, OUTPUT);
@@ -79,7 +78,7 @@ void loop() {
   float elapsedTime = (currentTime)/ 1000000.0;
   analogWrite(ENA, valor);
   calculateCurrentSpeed();
-  Serial.println(valor);
+  // Serial.println(valor);
   // Serial.print(",");
   // Serial.println(elapsedTime);
 
