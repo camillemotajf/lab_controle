@@ -5,7 +5,7 @@
 #include <Encoder.h>
 
 #define AMPLITUDE 100
-#define FREQUENCIA 0.1// Defina a frequência desejada aqui
+#define FREQUENCIA 10// Defina a frequência desejada aqui
 // #include <typeinfo>
 
 // Definições de pinos para o motor e encoder
@@ -70,7 +70,7 @@ void loop() {
   // Calcula o valor da onda senoidal
   double valor = AMPLITUDE * sin(2*PI*FREQUENCIA * micros()/1000000.0) + AMPLITUDE;
   analogWrite(ENA, valor);
-  calculateCurrentSpeed();
-  // Serial.println(valor);
+  // calculateCurrentSpeed();
+  Serial.println(valor);
 
 }
