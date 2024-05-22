@@ -19,34 +19,31 @@ const int ENA = 5;  // Pino ENA da ponte H (controle de velocidade)
 const float PPR = 200.0; // Pulsos por rotação do encoder
 
 // Variáveis para controle de posição e velocidade
-volatile long pos_i = 0;             // Posição atual do encoder
-volatile unsigned long lastTime = 0; // Último tempo registrado para cálculo de velocidade
-volatile long lastPos_i = 0;         // Última posição do encoder para cálculo de velocidade
-double speed = 0.0;                   // Velocidade calculada do encoder em unidades de posição por segundo
+long lastPos_i = 0;
+unsigned long lastTime = 0;
 
 // Objeto Encoder
 Encoder encoder(ENCA, ENCB);
 
 void calculateCurrentSpeed() {
-
   // Calcula o tempo decorrido desde a última atualização
   unsigned long currentTime = micros();
+  unsigned long timeChange = currentTime - lastTime;
+  lastTime = currentTime;
 
   // Calcula a mudança na posição do encoder desde a última atualização
   long currentPosition = encoder.read();
-  long positionChange = (currentPosition - lastPos_i);
+  long positionChange = currentPosition - lastPos_i;
   lastPos_i = currentPosition;
 
   // Calcula a velocidade em unidades de posição por segundo
-  speed = (currentPosition * 60)/(200 * currentTime * 1000000);
+  float speed = (positionChange * 1000000.0) / timeChange; // pulsos por segundo
 
   // Converte a velocidade para RPM
-  float rpm = (speed / PPR) * 60.0;  // RPM = (velocidade / PPR) * 60
+  float rpm = (speed / PPR) * 60.0; // RPM = (velocidade em pulsos por segundo / PPR) * 60
 
   // Exibe a velocidade calculada em RPM no Serial Monitor
-  Serial.print("Velocidade: ");
-  Serial.println(speed);
-
+  Serial.println(rpm);
 }
 
 int t = 0;
@@ -69,13 +66,11 @@ void setup() {
 }
 
 void loop() {
-//   for (int t = 0; t < 360; t++) { // Loop de 0 a 360 graus
-    // float radianos = t * (PI / 180.0); // Converte graus para radianos
-  double valor = AMPLITUDE * sin(2*PI*FREQUENCIA * micros()/1000000.0) + AMPLITUDE; // Calcula o valor da onda senoidal
+
+  // Calcula o valor da onda senoidal
+  double valor = AMPLITUDE * sin(2*PI*FREQUENCIA * micros()/1000000.0) + AMPLITUDE;
   analogWrite(ENA, valor);
-  // calculateCurrentSpeed();
-  Serial.println(valor);
-  // Serial.print(",");
-  // Serial.println(elapsedTime);
+  calculateCurrentSpeed();
+  // Serial.println(valor);
 
 }
