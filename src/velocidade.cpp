@@ -1,5 +1,5 @@
-// #include <Encoder.h>
 // #include <Arduino.h>
+// #include  <Encoder.h>
 // // #include <typeinfo>
 
 // // Definições de pinos para o motor e encoder
@@ -8,7 +8,7 @@
 // const int IN1 = 9;   // Pino IN1 da ponte H (controle de direção)
 // const int IN2 = 8;   // Pino IN2 da ponte H (controle de direção)
 // const int ENA = 10;  // Pino ENA da ponte H (controle de velocidade)
-// const int PWM_VALUE = 50; // Valor arbitrário de PWM (0 a 255)
+// const int PWM_VALUE = 200; // Valor arbitrário de PWM (0 a 255)
 
 // // Constantes para configuração do encoder
 // const float PPR = 200.0; // Pulsos por rotação do encoder
