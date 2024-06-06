@@ -10,7 +10,7 @@ baud_rate = 115200
 ser = serial.Serial(serial_port, baud_rate)
 
 # Abre o arquivo CSV para escrita
-csv_file_path = 'dados_rpm_0.1hz.csv'
+csv_file_path = 'dados_rpm_0.1_modificado.csv'
 csv_file = open(csv_file_path, 'w', newline='')
 csv_writer = csv.writer(csv_file)
 csv_writer.writerow(['rpm'])
