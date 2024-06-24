@@ -20,22 +20,15 @@ volatile unsigned long count;
 
 // Variáveis PID
 double Setpoint, Input, Output;
-double Kp = 2, Ki = 5, Kd = 0;
+double Kp = 100, Ki = 20, Kd = 0;
 
 // Instancia o objeto PID
 PID myPID(&Input, &Output, &Setpoint, Kp, Ki, Kd, DIRECT);
+unsigned long deltaTime;
+unsigned long ultimoTempo = 0;
 
 void countPulse() {
-  // int stateA = digitalRead(ENCA);
-  // int stateB = digitalRead(ENCB);
-
   pulseCount++;
-  
-  // if (stateA == stateB) {
-  //   pulseCount++;
-  // } else {
-  //   pulseCount--;
-  // }
 }
 
 void pwmInterrupt()
@@ -46,7 +39,7 @@ void pwmInterrupt()
     // interrupts();
     
     // Calcula RPM
-    rpm = (count * 60.0) / pulsesPerRevolution;
+    rpm = (count * 6000.0) / pulsesPerRevolution;
     Input = rpm;
     
     // Printa a velocidade na porta serial
@@ -55,9 +48,9 @@ void pwmInterrupt()
     // Serial.println(" RPM");
 
   // Cálculo do controle PID
-  myPID.Compute();
+    myPID.Compute();
 
-  analogWrite(ENA, Output);
+    analogWrite(ENA, Output);
 }
 
 void setup() {
@@ -74,7 +67,7 @@ void setup() {
   digitalWrite(IN1, HIGH);
   digitalWrite(IN2, LOW);
 
-  Timer1.initialize(100); // Inicializa o Timer1 com período de 100 microssegundos
+  Timer1.initialize(10000); // Inicializa o Timer1 com período de 100 microssegundos
   Timer1.attachInterrupt(pwmInterrupt); // Anexa a função de interrupção
 
   // Configura o PID
@@ -90,8 +83,8 @@ void loop() {
   //   long count = pulseCount;
   //   pulseCount = 0;
   //   interrupts();
-  // Serial.println(rpm);
-  Serial.println(pulseCount);
+  // Serial.print("Contagem dos Pulsos: ");
+  // Serial.println(pulseCount);
  
     
   //   // Calcula RPM
@@ -99,8 +92,8 @@ void loop() {
   //   Input = rpm;
     
   //   // Printa a velocidade na porta serial
-  //   // Serial.print("Velocidade do motor: ");
-  //   Serial.println(rpm);
+    // Serial.print("Velocidade do motor: ");
+    Serial.println(rpm);
   //   // Serial.println(" RPM");
     
   //   // Atualiza o tempo
